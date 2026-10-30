@@ -16,16 +16,15 @@ export class GraficosComponent implements OnDestroy {
 
   selecciones = input<Seleccion[]>([]);
 
-  private canvasDona = viewChild<ElementRef<HTMLCanvasElement>>('canvasDona');
+  // TODO - Inicializar el canvas de la gráfica de donuts
+  private canvasDona = null;
 
   private charts = new Map<string, Chart>();
 
+  // TODO - Añadir el effect para definir la lógica de renderizado de la gráfica de donuts
   constructor() {
     effect(() => {
-      const data   = this.selecciones();
-      const canvas = this.canvasDona();
-      if (!canvas) return;
-      this.renderDona(data, canvas.nativeElement);
+
     });
   }
 
@@ -36,49 +35,54 @@ export class GraficosComponent implements OnDestroy {
 
   // Gráfico de donuts: goles totales anotados por cada grupo
   private renderDona(data: Seleccion[], canvas: HTMLCanvasElement) {
-    this.destroyChart('dona');
+    // TODO - Destruir la gráfica de donuts si ya existe
 
-    //Crea un nuevo Array con los grupos existentes
-    const grupos = [...new Set(data.map(s => s.grupo))].sort();
-    const totales = grupos.map(g =>
-      data.filter(s => s.grupo === g).reduce((acc, s) => acc + s.goles, 0)
-    );
+    //TODO - Crea un nuevo Array con los grupos existentes
+
+    //TODO - Crea un nuevo Array con los goles totales por grupo
 
     const colores = ['#4e79a7', '#f28e2b', '#e15759', '#76b7b2', '#59a14f', '#edc948'];
 
+    // TODO - Crea la gráfica de donuts con los datos de grupos y goles totales
     this.charts.set('dona', new Chart(canvas, {
-      type: 'doughnut',
+      type: '',
       data: {
-        labels: grupos.map(g => `Grupo ${g}`),
+        //TODO - Añadir los labels y datasets de la gráfica de donuts
+        labels: [],
         datasets: [{
-          data: totales,
+          data: [],
           backgroundColor: colores,
           borderColor: '#fff',
           borderWidth: 3,
-          //hoverOffset: Cuanto sobresale el "quesito" 
-          hoverOffset: 12
+          //TODO - hoverOffset: Cuanto sobresale el "quesito" 
+
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        //cutout: Cuanto hueco queda dentro del doughnout. Si se pone 0, sería como pie chart
-        cutout: '60%',
+        //TODO - cutout: Cuanto hueco queda dentro del doughnout. Si se pone 0, sería como pie chart
+        cutout: '',
         plugins: {
           legend: {
-            position: 'bottom',
-            labels: { color: '#333', padding: 16, font: { size: 13 } }
+            //TODO - position: Posición de la leyenda. Puede ser 'top', 'left', 'bottom', 'right' o 'center'
+            position: '',
+            //TODO - labels: Color, padding y tamaño de fuente de la leyenda
+            labels: { }
           },
           title: {
-            display: true,
-            text: 'Goles totales por grupo — UEFA Euro 2024',
+            //TODO - display: Si se muestra o no el título de la gráfica
+
+            //TODO - text: Texto del título de la gráfica
+            text: '4',
             font: { size: 15, weight: 'bold' },
             color: '#333',
             padding: { bottom: 14 }
           },
+          //TODO - tooltip: Personalización del tooltip que aparece al pasar el ratón por encima de un "quesito"
           tooltip: {
             callbacks: {
-              label: ctx => ` ${ctx.label}: ${ctx.parsed} goles`
+              
             }
           }
         }
